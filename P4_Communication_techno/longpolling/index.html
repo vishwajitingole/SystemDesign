@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="result"></div>
+</body>
+<script>
+    let lastData = "";
+
+    async function apicall() {
+        try {
+            const res = await fetch(`/getData?lastdata=${lastData}`);
+            const result = await res.json();
+            if (result.data !== lastData) {
+                lastData = result.data;
+                const resu = document.querySelector(".result");
+                resu.innerText = lastData;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        setTimeout(apicall, 1000); // Repeat the call every second
+    }
+
+    apicall();
+</script>
+
+</html>
